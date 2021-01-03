@@ -1,4 +1,4 @@
-import 'package:flutter_app_boilerplate/core/app_helper.dart';
+import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
 
 class Country {
   String isoCode;
@@ -13,9 +13,9 @@ class Country {
 
   factory Country.fromMap(Map<String, dynamic> data) {
     return Country(
-      isoCode: AppHelper.getString(data['isoCode']),
-      name: AppHelper.getString(data['name']),
-      countryCode: AppHelper.getInt(data['countryCode']),
+      isoCode: Helper.getString(data['isoCode']),
+      name: Helper.getString(data['name']),
+      countryCode: Helper.getInt(data['countryCode']),
     );
   }
 

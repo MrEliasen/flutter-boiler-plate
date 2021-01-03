@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/core/app_error_handler.dart';
-import 'package:flutter_app_boilerplate/hive/hive_controller.dart';
+import 'package:flutter_app_boilerplate/App.dart';
+import 'package:flutter_app_boilerplate/infrastructure/core/error_handler.dart';
+import 'package:flutter_app_boilerplate/infrastructure/sources/local/hive/hive_db.dart';
 import 'package:logging/logging.dart';
-
-import 'app.dart';
 
 Future<void> main() async {
   // make sure the flutter widget bindings are initialised before we continue.
@@ -21,16 +20,16 @@ Future<void> main() async {
   final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
   // setup Sentry.io and local error handler
-  AppErrorHandler();
+  ErrorHandler();
   // Load Hive
-  await HiveController().init();
+  await HiveDB().init();
 
   // Run the whole app in a zone to capture all uncaught errors.
   runZonedGuarded(
     () => runApp(App(navKey)),
     (error, stackTrace) {
       try {
-        AppErrorHandler().logException(error, stackTrace);
+        ErrorHandler().logException(error, stackTrace);
         print('Error sent to sentry.io: $error');
         print(stackTrace);
       } catch (e) {

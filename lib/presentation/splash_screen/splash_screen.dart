@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/core/app_safe_area.dart';
-import 'package:flutter_app_boilerplate/hive/hive_controller.dart';
-import 'package:flutter_app_boilerplate/views/welcome.dart';
+import 'package:flutter_app_boilerplate/infrastructure/sources/local/hive/hive_db.dart';
+import 'package:flutter_app_boilerplate/presentation/routes/route_transitions.dart';
+import 'package:flutter_app_boilerplate/presentation/routes/routes.dart';
+import 'package:flutter_app_boilerplate/presentation/welcome/welcome.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = 'splash_screen';
+  static Function routeTransition() => namedRouteBuilder(
+        SplashScreen(),
+        transition: RouteTransitions.fade,
+      );
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -21,9 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Future setup() async {
     await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
 
-    /// instantiate the AppSafeArea helper
-    AppSafeArea(offset: MediaQuery.of(context).padding);
-
     await loadSession();
 
     Navigator.of(context).pushReplacementNamed(Welcome.routeName);
@@ -31,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future loadSession() async {
     // placeholder
-    await HiveController().session.get();
+    await HiveDB().session.get();
   }
 
   @override

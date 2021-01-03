@@ -1,16 +1,16 @@
-import 'package:flutter_app_boilerplate/core/app_error_handler.dart';
-import 'package:flutter_app_boilerplate/models/user.dart';
+import 'package:flutter_app_boilerplate/domain/auth/user.dart';
+import 'package:flutter_app_boilerplate/infrastructure/core/error_handler.dart';
 import 'package:hive/hive.dart';
 
-class HiveSession {
+class SessionHive {
   LazyBox<User> _box;
 
   /// Keep the same instance alive
-  static HiveSession _instance;
+  static SessionHive _instance;
 
   /// Keep the same instance alive
-  factory HiveSession() => _instance ??= HiveSession._();
-  HiveSession._();
+  factory SessionHive() => _instance ??= SessionHive._();
+  SessionHive._();
 
   Future open() async {
     _box = await Hive.openLazyBox<User>('session');
@@ -20,7 +20,7 @@ class HiveSession {
     try {
       _box.put('session', user);
     } catch (error, stackTrace) {
-      AppErrorHandler().logException(error, stackTrace);
+      ErrorHandler().logException(error, stackTrace);
     }
   }
 
@@ -28,7 +28,7 @@ class HiveSession {
     try {
       return _box.get('session');
     } catch (error, stackTrace) {
-      AppErrorHandler().logException(error, stackTrace);
+      ErrorHandler().logException(error, stackTrace);
       return null;
     }
   }
@@ -37,7 +37,7 @@ class HiveSession {
     try {
       _box.clear();
     } catch (error, stackTrace) {
-      AppErrorHandler().logException(error, stackTrace);
+      ErrorHandler().logException(error, stackTrace);
     }
   }
 }

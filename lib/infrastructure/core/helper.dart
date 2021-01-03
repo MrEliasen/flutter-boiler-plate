@@ -1,4 +1,4 @@
-class AppHelper {
+class Helper {
   /// Converts and asserts the [value] as if it was a boolean
   static bool getBool(dynamic value) {
     bool _returnValue = false;
@@ -127,7 +127,7 @@ class AppHelper {
         return '';
       }
 
-      return AppHelper.getString(value[0]);
+      return Helper.getString(value[0]);
     }
 
     return '';
@@ -151,7 +151,7 @@ class AppHelper {
 
       final List<String> _items = [];
       for (final dynamic str in listValue) {
-        String newStr = AppHelper.getString(str);
+        String newStr = Helper.getString(str);
 
         if (lowerCase == true) {
           newStr = newStr.toLowerCase();
@@ -165,7 +165,7 @@ class AppHelper {
 
     /// check for [String] types
     if (value is String) {
-      String str = AppHelper.getString(value);
+      String str = Helper.getString(value);
 
       if (lowerCase == true) {
         str = value.toLowerCase();

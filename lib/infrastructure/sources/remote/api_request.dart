@@ -2,25 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_app_boilerplate/core/app_error_handler.dart';
-import 'package:flutter_app_boilerplate/core/app_settings.dart';
-import 'package:flutter_app_boilerplate/models/api_response.dart';
+import 'package:flutter_app_boilerplate/infrastructure/core/error_handler.dart';
+import 'package:flutter_app_boilerplate/settings.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 
-class APIController {
-  final log = Logger('API');
-
-  /// The driver authToken
-  String authToken;
-
-  /// Keep the same instance alive
-  static APIController _instance;
-  factory APIController() => _instance ??= APIController._();
-  APIController._();
+class APIRequest {
+  final log = Logger('APIRequest');
 
   /// Make POST
-  Future<APIResponse> post(
+  Future<http.Response> post(
     String endpoint, {
     Map body,
     Map<String, String> headers,
@@ -36,7 +27,7 @@ class APIController {
   }
 
   /// Make PATCH
-  Future<APIResponse> patch(
+  Future<http.Response> patch(
     String endpoint, {
     Map body,
     Map<String, String> headers,
@@ -52,7 +43,7 @@ class APIController {
   }
 
   /// Make PUT
-  Future<APIResponse> put(
+  Future<http.Response> put(
     String endpoint, {
     Map body,
     Map<String, String> headers,
@@ -68,7 +59,7 @@ class APIController {
   }
 
   /// Make GET
-  Future<APIResponse> get(
+  Future<http.Response> get(
     String endpoint, {
     Map<String, String> headers,
     String url,
@@ -82,7 +73,7 @@ class APIController {
   }
 
   /// Make GET
-  Future<APIResponse> delete(
+  Future<http.Response> delete(
     String endpoint, {
     Map body,
     Map<String, String> headers,
@@ -98,7 +89,7 @@ class APIController {
   }
 
   /// Make Multipart (file upload)
-  Future<APIResponse> multipart(
+  Future<http.Response> multipart(
     String endpoint, {
     Map body,
     Map<String, File> files,
@@ -116,27 +107,27 @@ class APIController {
   }
 
   /// Make API call
-  Future<APIResponse> _call(
+  Future<http.Response> _call(
     String method,
     String endpoint, {
     Map<String, String> headers,
     Map body,
     Map<String, File> files,
     String url,
+    String authToken,
   }) async {
     try {
       String requestEndpoint = endpoint;
 
       /// add a forward-slash to the request-endpoint, but only if the
       /// apiBaseUrl does not end with one.
-      if (!AppSettings.apiBaseUrl.endsWith('/') &&
+      if (!Settings.apiBaseUrl.endsWith('/') &&
           !requestEndpoint.startsWith('/')) {
         requestEndpoint = "/$endpoint";
       }
 
       final DateTime now = DateTime.now();
-      final String requestUrl =
-          url ?? '${AppSettings.apiBaseUrl}$requestEndpoint';
+      final String requestUrl = url ?? '${Settings.apiBaseUrl}$requestEndpoint';
       final Map<String, String> requestHeaders = {
         "content-type": "application/json",
       };
@@ -159,7 +150,7 @@ class APIController {
       log.log(Level.INFO, '''
       
   --------- API REQUEST ---------
-  Call ID: ${now.millisecondsSinceEpoch}
+  Request Fingerprint: ${now.millisecondsSinceEpoch}
   Method: $method
   URL: $requestUrl
   Headers: ${requestHeaders.toString()}
@@ -216,15 +207,15 @@ class APIController {
       log.log(Level.INFO, '''
       
   --------- API RESPONSE ---------
-  Call ID: ${now.millisecondsSinceEpoch}
+  Request Fingerprint: ${now.millisecondsSinceEpoch}
   Status Code: ${response.statusCode}
-  Response Headers: ${response.headers}
-  Response Body: ${response.body}
+  Headers: ${response.headers}
+  Body: ${response.body}
   --------------------------------''');
 
-      return APIResponse.fromHttp(response);
+      return response;
     } catch (error, stacktrace) {
-      AppErrorHandler().logException(error, stacktrace);
+      ErrorHandler().logException(error, stacktrace);
       return null;
     }
   }

@@ -1,5 +1,5 @@
-import 'package:flutter_app_boilerplate/core/app_helper.dart';
-import 'package:flutter_app_boilerplate/models/country.dart';
+import 'package:flutter_app_boilerplate/domain/auth/country.dart';
+import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
 
 class User {
   /// hive adaptor id
@@ -16,7 +16,7 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> data) {
     return User(
-      phoneNumber: AppHelper.getString(data['phoneNumber']),
+      phoneNumber: Helper.getString(data['phoneNumber']),
       country: Country.fromMap(data['country'] as Map<String, dynamic>),
     );
   }

@@ -1,26 +1,26 @@
+import 'package:flutter_app_boilerplate/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/core/app_settings.dart';
 import 'package:sentry/sentry.dart';
 
-class AppErrorHandler {
+class ErrorHandler {
   SentryClient _sentry;
 
   /// Keep the same instance alive
-  static AppErrorHandler _instance;
-  factory AppErrorHandler() {
+  static ErrorHandler _instance;
+  factory ErrorHandler() {
     if (_instance != null) {
       return _instance;
     }
 
-    return _instance = AppErrorHandler._().._init();
+    return _instance = ErrorHandler._().._init();
   }
-  AppErrorHandler._();
+  ErrorHandler._();
 
   void _init() {
     /// create the sentry client instance
-    if (AppSettings.sentryUrl.isNotEmpty) {
+    if (Settings.sentryUrl.isNotEmpty) {
       _sentry = SentryClient(
-        dsn: AppSettings.sentryUrl,
+        dsn: Settings.sentryUrl,
       );
     }
 
@@ -39,7 +39,7 @@ class AppErrorHandler {
 
   /// log exception to console, or send to sentry if not in debug mode
   Future<void> logException(dynamic error, dynamic stackTrace) async {
-    if (AppSettings.isInDebugMode) {
+    if (Settings.isInDebugMode) {
       // Print the exception to the console.
       // Print the full stacktrace in debug mode.
       print('Caught error: $error');

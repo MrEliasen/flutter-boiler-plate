@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/core/app_theme.dart';
-import 'package:flutter_app_boilerplate/views/splash_screen.dart';
+import 'package:flutter_app_boilerplate/presentation/app_theme.dart';
+import 'package:flutter_app_boilerplate/presentation/splash_screen/splash_screen.dart';
 
-import 'routes/routes.dart';
+import 'presentation/routes/routes.dart';
 
 class App extends StatelessWidget {
   final GlobalKey<NavigatorState> navKey;
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ord',
+      title: 'Boilerplate',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: AppTheme.swatch,
