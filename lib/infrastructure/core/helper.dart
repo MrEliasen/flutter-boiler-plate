@@ -33,7 +33,7 @@ class Helper {
 
     /// check for [double] types
     if (value is double) {
-      return value >= 1.0;
+      return value > 0;
     }
 
     /// return default value if non of the above
@@ -41,10 +41,10 @@ class Helper {
   }
 
   /// Converts [value] to a double, returns 0.0 on failure or unconverteble value.
-  static double getDouble(dynamic value) {
+  static double getDouble(dynamic value, {bool nullDefault = false}) {
     /// check for null values
     if (value == null) {
-      return 0.0;
+      return nullDefault ? null : 0.0;
     }
 
     /// check for [double] types
@@ -68,14 +68,14 @@ class Helper {
       }
     }
 
-    return 0.0;
+    return nullDefault ? null : 0.0;
   }
 
   /// Converts [value] to an int, returns 0 on failure or unconverteble value.
-  static int getInt(dynamic value) {
+  static int getInt(dynamic value, {bool nullDefault = false}) {
     /// check for null values
     if (value == null) {
-      return 0;
+      return nullDefault ? null : 0;
     }
 
     /// check for [int] types
@@ -95,20 +95,20 @@ class Helper {
           return int.parse(value);
         } catch (error) {
           // re assume this means the value is actually a double, as a string.
-          return getInt(double.parse(value));
+          return getInt(double.parse(value), nullDefault: nullDefault);
         }
       }
     }
 
-    return 0;
+    return nullDefault ? null : 0;
   }
 
   /// Parses the [value] as a string. If the value is a Map or List, it will
   /// use the first index, returns '' on failure or error.
-  static String getString(dynamic value) {
+  static String getString(dynamic value, {bool nullDefault = false}) {
     /// check for null values
     if (value == null) {
-      return '';
+      return nullDefault ? null : '';
     }
 
     /// check for [String] types
@@ -127,10 +127,10 @@ class Helper {
         return '';
       }
 
-      return Helper.getString(value[0]);
+      return Helper.getString(value[0], nullDefault: nullDefault);
     }
 
-    return '';
+    return nullDefault ? null : '';
   }
 
   /// Parses the [value] as a list of string values. If [lowerCase] is true,
