@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_boilerplate/App.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/error_handler.dart';
+import 'package:flutter_app_boilerplate/infrastructure/core/global_navigator.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/local/hive/hive_db.dart';
 import 'package:logging/logging.dart';
 
@@ -21,6 +22,8 @@ Future<void> main() async {
 
   // setup Sentry.io and local error handler
   ErrorHandler();
+  // Load the global navigator
+  GlobalNavigator(navKey);
   // Load Hive
   await HiveDB().init();
 
