@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/infrastructure/sources/local/hive/hive_db.dart';
+import 'package:flutter_app_boilerplate/infrastructure/sources/local/db/hive/hive_db.dart';
 import 'package:flutter_app_boilerplate/presentation/routes/route_transitions.dart';
 import 'package:flutter_app_boilerplate/presentation/routes/routes.dart';
 import 'package:flutter_app_boilerplate/presentation/welcome/welcome.dart';
