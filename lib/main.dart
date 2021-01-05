@@ -36,12 +36,9 @@ Future<void> main() async {
     (error, stackTrace) {
       try {
         ErrorHandler().logException(error, stackTrace);
-        print('Error sent to sentry.io: $error');
-        print(stackTrace);
       } catch (e) {
         print('Sending report to sentry.io failed: $e');
-        print('Original error: $error');
-        print('Stack Trace');
+        print(error);
         print(stackTrace);
       }
     },
