@@ -13,12 +13,14 @@ Future<void> main() async {
   // make sure the flutter widget bindings are initialised before we continue.
   WidgetsFlutterBinding.ensureInitialized();
 
+  // setup logging output handler and level
   Logger.root.level = kDebugMode ? Level.ALL : Level.OFF;
   Logger.root.onRecord.listen((record) {
     print('(${record.level.name}) :: ${record.message}');
   });
 
-  /// https://github.com/brianegan/flutter_redux/issues/5
+  // create the global nav key for the app, allowing us to navigate without
+  // the need for "context"
   final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
   // setup Sentry.io and local error handler
