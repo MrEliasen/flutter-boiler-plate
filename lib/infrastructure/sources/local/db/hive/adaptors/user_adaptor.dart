@@ -1,4 +1,4 @@
-import 'package:flutter_app_boilerplate/domain/auth/user.dart';
+import 'package:flutter_app_boilerplate/entities/auth/user.dart';
 import 'package:hive/hive.dart';
 
 class UserAdapter extends TypeAdapter<User> {

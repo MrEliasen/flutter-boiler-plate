@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:flutter_app_boilerplate/domain/infrastructure/weather.dart';
+import 'package:flutter_app_boilerplate/entities/infrastructure/weather.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api_request.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api_response.dart';

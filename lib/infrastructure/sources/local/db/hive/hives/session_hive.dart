@@ -1,4 +1,4 @@
-import 'package:flutter_app_boilerplate/domain/auth/user.dart';
+import 'package:flutter_app_boilerplate/entities/auth/user.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/error_handler.dart';
 import 'package:hive/hive.dart';
 
