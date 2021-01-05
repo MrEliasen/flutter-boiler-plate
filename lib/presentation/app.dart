@@ -3,7 +3,7 @@ import 'package:flutter_app_boilerplate/presentation/app_theme.dart';
 import 'package:flutter_app_boilerplate/presentation/widgets/splash_screen/splash_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'presentation/routes/routes.dart';
+import 'routes/routes.dart';
 
 class App extends StatelessWidget {
   final GlobalKey<NavigatorState> navKey;
