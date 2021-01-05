@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:flutter/material.dart';
+import 'package:flutter_app_boilerplate/domain/infrastructure/weather.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api_request.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api_response.dart';
@@ -47,41 +47,15 @@ class _Response extends APIResponse {
   Map<String, double> coordinates;
 
   /// location weather
-  List<_Weather> weather;
+  List<Weather> weather;
 
-  List<_Weather> parseWeather() {
-    final List<_Weather> _list = [];
+  List<Weather> parseWeather() {
+    final List<Weather> _list = [];
 
     for (final dynamic weather in body['weather'] as List) {
-      _list.add(_Weather.fromJson(weather));
+      _list.add(Weather.fromJson(weather));
     }
 
     return _list;
-  }
-}
-
-/// The weather model used in the response
-class _Weather {
-  _Weather({
-    @required this.id,
-    @required this.main,
-    @required this.description,
-    @required this.icon,
-  });
-
-  int id;
-  String main;
-  String description;
-  String icon;
-
-  factory _Weather.fromJson(dynamic data) {
-    final Map<String, dynamic> weather = data as Map<String, dynamic>;
-
-    return _Weather(
-      id: Helper.getInt(weather['id']),
-      main: Helper.getString(weather['id']),
-      description: Helper.getString(weather['id']),
-      icon: Helper.getString(weather['id']),
-    );
   }
 }
