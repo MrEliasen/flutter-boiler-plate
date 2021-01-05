@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_boilerplate/presentation/splash_screen/splash_screen.dart';
-import 'package:flutter_app_boilerplate/presentation/welcome/welcome.dart';
+import 'package:flutter_app_boilerplate/presentation/widgets/splash_screen/splash_screen.dart';
+import 'package:flutter_app_boilerplate/presentation/widgets/welcome/welcome.dart';
 import 'package:flutter_app_boilerplate/settings.dart';
 
 /// The map containing all named routes.
