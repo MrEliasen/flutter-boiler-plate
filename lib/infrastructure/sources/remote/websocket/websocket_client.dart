@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:web_socket_channel/io.dart';
@@ -7,38 +9,54 @@ class WebSocketClient {
   final Logger _log = Logger('WebSocketClient');
 
   /// connection details
-  final String host;
-  final Map<String, dynamic> headers;
-  final int pingInterval;
+  String _host;
+  Map<String, dynamic> _headers;
+  int _pingInterval;
 
   /// instances details.
   IOWebSocketChannel _connection;
   bool _expectedDisconnect = false;
 
-  WebSocketClient({
-    @required this.host,
-    this.headers,
-    this.pingInterval = 10,
-  });
+  /// notification channel
+  StreamController _messageStream;
+  Stream<dynamic> get messages => _messageStream.stream;
 
-  /// connect to the web socket server defined in [host].
+  /// errors channel
+  StreamController _errorStream;
+  Stream<dynamic> get errors => _errorStream.stream;
+
+  WebSocketClient({
+    @required String host,
+    Map<String, dynamic> headers,
+    int pingInterval = 10,
+  }) {
+    _host = host;
+    _headers = headers;
+    _pingInterval = pingInterval;
+
+    /// create the notification stream
+    _messageStream = StreamController.broadcast();
+    _errorStream = StreamController.broadcast();
+  }
+
+  /// connect to the web socket server defined in [_host].
   Future connect() async {
     /// reset the bool describing if we disconnect if it was intentional
     _expectedDisconnect = false;
 
     /// connect to the server
     _connection = IOWebSocketChannel.connect(
-      host,
-      headers: headers,
-      pingInterval: Duration(seconds: pingInterval),
+      Uri.parse(_host),
+      headers: _headers,
+      pingInterval: Duration(seconds: _pingInterval),
     );
 
     _log.log(Level.INFO, '''
       
   --------- WEB SOCKET :: CONNECT ---------
-  host: $host
-  Headers: ${headers.toString()}
-  Ping Interval: $pingInterval
+  host: $_host
+  Headers: ${_headers.toString()}
+  Ping Interval: $_pingInterval
   --------------------------------''');
 
     /// setup message listener
@@ -61,7 +79,7 @@ class WebSocketClient {
   /// Check if the connection still exists
   Future _checkConnection() async {
     await Future.delayed(
-      Duration(seconds: pingInterval),
+      Duration(seconds: _pingInterval),
     );
 
     if (_connection.closeCode != null && !_expectedDisconnect) {
@@ -80,6 +98,8 @@ class WebSocketClient {
     --------- WEB SOCKET :: MESSAGE ---------
     ${message.toString()}
     -----------------------------------------''');
+
+    _messageStream.sink.add(message);
   }
 
   /// handle web socket errors
@@ -89,5 +109,7 @@ class WebSocketClient {
     --------- WEB SOCKET :: ERROR ---------
     ${message.toString()}
     ---------------------------------------''');
+
+    _errorStream.sink.add(message);
   }
 }
