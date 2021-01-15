@@ -7,45 +7,30 @@ class WebSocketClient {
   final Logger _log = Logger('WebSocketClient');
 
   /// connection details
-  String _host;
-  Map<String, dynamic> _headers;
-  int _pingInterval = 10;
+  final String host;
+  final Map<String, dynamic> headers;
+  final int pingInterval;
 
   /// instances details.
   IOWebSocketChannel _connection;
   bool _expectedDisconnect = false;
 
-  /// Keep the same instance alive
-  static WebSocketClient _instance;
-  factory WebSocketClient() {
-    if (_instance != null) {
-      return _instance;
-    }
-
-    return _instance ??= WebSocketClient._();
-  }
-
-  WebSocketClient._();
+  WebSocketClient({
+    @required this.host,
+    this.headers,
+    this.pingInterval = 10,
+  });
 
   /// connect to the web socket server defined in [host].
-  Future connect({
-    @required String host,
-    Map<String, dynamic> headers,
-    int pingInterval = 10,
-  }) async {
+  Future connect() async {
     /// reset the bool describing if we disconnect if it was intentional
     _expectedDisconnect = false;
 
-    /// save the settings in case we need to reconnect
-    _host = host;
-    _headers = headers;
-    _pingInterval = pingInterval;
-
     /// connect to the server
     _connection = IOWebSocketChannel.connect(
-      _host,
-      headers: _headers,
-      pingInterval: Duration(seconds: _pingInterval),
+      host,
+      headers: headers,
+      pingInterval: Duration(seconds: pingInterval),
     );
 
     _log.log(Level.INFO, '''
@@ -76,17 +61,13 @@ class WebSocketClient {
   /// Check if the connection still exists
   Future _checkConnection() async {
     await Future.delayed(
-      Duration(seconds: _pingInterval),
+      Duration(seconds: pingInterval),
     );
 
     if (_connection.closeCode != null && !_expectedDisconnect) {
       _log.log(Level.INFO, '------ WEB SOCKET :: RECONNECTING ------');
 
-      connect(
-        host: _host,
-        pingInterval: _pingInterval,
-        headers: _headers,
-      );
+      connect();
     } else {
       _checkConnection();
     }
