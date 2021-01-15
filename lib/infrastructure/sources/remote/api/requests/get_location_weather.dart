@@ -2,8 +2,8 @@ import 'dart:core';
 
 import 'package:flutter_app_boilerplate/entities/infrastructure/weather.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
-import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api_request.dart';
-import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api_response.dart';
+import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api/api_request.dart';
+import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api/api_response.dart';
 import 'package:http/http.dart';
 
 /// The API request
