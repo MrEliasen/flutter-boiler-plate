@@ -118,6 +118,8 @@ class APIRequest {
   }) async {
     try {
       String requestEndpoint = endpoint;
+      String requestBody;
+      http.Response response;
 
       /// add a forward-slash to the request-endpoint, but only if the
       /// apiBaseUrl does not end with one.
@@ -128,11 +130,7 @@ class APIRequest {
 
       final DateTime now = DateTime.now();
       final String requestUrl = url ?? '${Settings.apiBaseUrl}$requestEndpoint';
-      final Map<String, String> requestHeaders = {
-        "content-type": "application/json",
-      };
-      String requestBody;
-      http.Response response;
+      final Map<String, String> requestHeaders = {};
 
       // merge additional headers if found
       if (headers != null) {
@@ -141,6 +139,10 @@ class APIRequest {
 
       if (authToken != null) {
         requestHeaders['authToken'] = authToken;
+      }
+
+      if (!requestHeaders.containsKey("content-type") && body.isNotEmpty) {
+        requestHeaders["content-type"] = "application/json";
       }
 
       if (body != null) {
