@@ -18,6 +18,22 @@ class GetWeather extends APIRequest {
 
 /// The API Response
 class _Response extends APIResponse {
+  /// weather details
+  double temp;
+  double tempMin;
+  double tempMax;
+  double pressure;
+  double humidity;
+  Map<String, double> wind;
+
+  /// location details
+  String name;
+  Map<String, double> coordinates;
+
+  /// location weather
+  List<Weather> weather;
+
+  /// handle parsing the API response and creating the response instance
   _Response(Response response) : super(response) {
     final Map<String, dynamic> main = body['main'] as Map<String, double>;
 
@@ -34,21 +50,7 @@ class _Response extends APIResponse {
     weather = parseWeather();
   }
 
-  /// weather details
-  double temp;
-  double tempMin;
-  double tempMax;
-  double pressure;
-  double humidity;
-  Map<String, double> wind;
-
-  /// location details
-  String name;
-  Map<String, double> coordinates;
-
-  /// location weather
-  List<Weather> weather;
-
+  /// Handles parsing of the weather data
   List<Weather> parseWeather() {
     final List<Weather> _list = [];
 
