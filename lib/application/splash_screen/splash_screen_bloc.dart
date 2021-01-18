@@ -5,30 +5,29 @@ import 'package:flutter_app_boilerplate/infrastructure/sources/local/db/hive/hiv
 import 'package:flutter_app_boilerplate/models/auth/user.dart';
 
 class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
-  SplashScreenBloc({SplashScreenState initialState})
-      : super(initialState ?? SplashScreenInitialState());
+  SplashScreenBloc() : super(SessionLoadInProgressState());
 
   @override
   Stream<SplashScreenState> mapEventToState(SplashScreenEvent event) async* {
     switch (event.runtimeType) {
-      case LoadSessionEvent:
-        try {
-          yield SessionLoadingState();
-          final User user = await _loadSession();
-          yield SessionLoadedState(user);
-        } catch (error, stackTrace) {
-          yield SessionLoadingErrorState(error, stackTrace);
-        }
+      case SessionLoadSuccessEvent:
+        yield* _mapSessionLoadedState();
         break;
 
       default:
-        throw UnsupportedError('Event not supported');
+        print('Event "${event.runtimeType}" not supported');
         break;
     }
   }
 
-  Future<User> _loadSession() async {
-    await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
-    return HiveDB().session.get();
+  Stream<SplashScreenState> _mapSessionLoadedState() async* {
+    try {
+      await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
+      final User user = await HiveDB().session.get();
+
+      yield SessionLoadSuccessState(user);
+    } catch (error, stackTrace) {
+      yield SessionLoadFailureState(error, stackTrace);
+    }
   }
 }

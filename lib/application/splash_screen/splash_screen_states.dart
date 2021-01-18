@@ -4,25 +4,33 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class SplashScreenState extends Equatable {
+  const SplashScreenState();
+
   @override
   List<Object> get props => [];
 }
 
-class SplashScreenInitialState extends SplashScreenState {}
+/// INITIAL/PROGRESS
+class SessionLoadInProgressState extends SplashScreenState {}
 
-class SessionLoadingState extends SplashScreenState {}
-
-class SessionLoadedState extends SplashScreenState {
+/// SUCCESS
+class SessionLoadSuccessState extends SplashScreenState {
   final User session;
 
-  SessionLoadedState(this.session);
+  const SessionLoadSuccessState([this.session]);
+
+  @override
+  List<Object> get props => [session];
+
+  @override
+  String toString() =>
+      'SessionLoadSuccessState { session: ${session.toMap().toString()} }';
 }
 
-class SessionNotLoadedState extends SplashScreenState {}
-
-class SessionLoadingErrorState extends SplashScreenState {
+/// FAILURE
+class SessionLoadFailureState extends SplashScreenState {
   final dynamic error;
   final StackTrace stackTrace;
 
-  SessionLoadingErrorState(this.error, this.stackTrace);
+  const SessionLoadFailureState([this.error, this.stackTrace]);
 }
