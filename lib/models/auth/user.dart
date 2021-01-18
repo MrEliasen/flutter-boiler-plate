@@ -1,6 +1,6 @@
 import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
 
-import '../auth/country.dart';
+import 'country.dart';
 
 class User {
   /// hive adaptor id

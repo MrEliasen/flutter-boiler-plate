@@ -1,5 +1,5 @@
-import 'package:flutter_app_boilerplate/entities/auth/user.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/error_handler.dart';
+import 'package:flutter_app_boilerplate/models/auth/user.dart';
 import 'package:hive/hive.dart';
 
 class SessionHive {

@@ -16,12 +16,6 @@ class App extends StatelessWidget {
         // BlocProvider<BlocA>(
         //   create: (BuildContext context) => BlocA(),
         // ),
-        // BlocProvider<BlocB>(
-        //   create: (BuildContext context) => BlocB(),
-        // ),
-        // BlocProvider<BlocC>(
-        //   create: (BuildContext context) => BlocC(),
-        // ),
       ],
       child: MaterialApp(
         title: 'Boilerplate',

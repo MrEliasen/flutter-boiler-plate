@@ -1,14 +1,17 @@
 import 'dart:core';
 
-import 'package:flutter_app_boilerplate/entities/infrastructure/weather.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api/api_request.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/remote/api/api_response.dart';
+import 'package:flutter_app_boilerplate/models/infrastructure/weather.dart';
 import 'package:http/http.dart';
 
 /// The API request
-class GetWeather extends APIRequest {
-  Future<_Response> call({String location = "London,uk"}) async {
+class WeatherApiProvider extends APIRequest {
+  Future<APIResponse> fromLocation({
+    @required String location,
+  }) async {
     final Response response = await get(
       "https://samples.openweathermap.org/data/2.5/weather?q=${Uri.encodeComponent(location)}&appid=b6907d289e10d714a6e88b30761fae22",
     );
