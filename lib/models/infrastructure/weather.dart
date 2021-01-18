@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_boilerplate/infrastructure/core/helper.dart';
-import 'package:flutter_app_boilerplate/repositories/api_requests/location_weather.dart';
 
 /// The weather model used in the [GetWeather] API request
 class Weather {
