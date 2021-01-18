@@ -7,15 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = 'splash_screen';
-  static Function routeTransition() => namedRouteBuilder(
-        widget: SplashScreen(),
-        transition: RouteTransitions.fade,
-        blocProviders: [
-          BlocProvider<SplashScreenBloc>(
-            create: (BuildContext context) => SplashScreenBloc(),
-          ),
-        ],
-      );
+  static Function routeTransition = namedRouteBuilder(
+    SplashScreen(),
+    transition: RouteTransitions.fade,
+    blocProviders: [
+      BlocProvider<SplashScreenBloc>(
+        create: (BuildContext context) => SplashScreenBloc(),
+      ),
+    ],
+  );
 
   @override
   _SplashScreenState createState() => _SplashScreenState();

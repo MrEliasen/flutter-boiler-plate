@@ -11,8 +11,8 @@ Map<String, Function> routes = <String, Function>{
 };
 
 /// Generates the [PageRouteBuilder] for the provided [widget].
-Function namedRouteBuilder({
-  @required Widget widget,
+Function namedRouteBuilder(
+  Widget widget, {
   Duration duration,
   RouteTransitionsBuilder transition,
   List<BlocProvider> blocProviders,
