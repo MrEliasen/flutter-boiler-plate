@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_events.dart';
 import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_states.dart';
@@ -9,8 +11,10 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
 
   @override
   Stream<SplashScreenState> mapEventToState(SplashScreenEvent event) async* {
+    print(event.runtimeType);
+
     switch (event.runtimeType) {
-      case SessionLoadSuccessEvent:
+      case SessionLoadInProgressEvent:
         yield* _mapSessionLoadedState();
         break;
 

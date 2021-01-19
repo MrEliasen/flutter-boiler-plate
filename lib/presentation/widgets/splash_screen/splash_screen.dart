@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen.dart';
 import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_bloc.dart';
 import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_states.dart';
 import 'package:flutter_app_boilerplate/presentation/routes/route_transitions.dart';
@@ -23,15 +24,32 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    super.initState();
+
+    final bloc = BlocProvider.of<SplashScreenBloc>(context);
+    bloc.add(SessionLoadInProgressEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BlocBuilder<SplashScreenBloc, SplashScreenState>(
-              builder: (context, state) {
-            return const Text('Splash Screen');
-          }),
+            builder: (context, state) {
+              if (state is SessionLoadFailureState) {
+                return const Text('Failed To load Session');
+              }
+
+              if (state is SessionLoadInProgressState) {
+                return const Text('Loading session..');
+              }
+
+              return const Text('Loaded and ready');
+            },
+          ),
         ],
       ),
     );

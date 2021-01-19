@@ -9,6 +9,9 @@ abstract class SplashScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
+/// INITIAL/PROGRESS
+class SessionLoadInProgressEvent extends SplashScreenEvent {}
+
 class SessionLoadSuccessEvent extends SplashScreenEvent {
   final User session;
 
