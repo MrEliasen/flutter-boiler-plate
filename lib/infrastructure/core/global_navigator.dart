@@ -7,7 +7,7 @@ class GlobalNavigator {
   /// the singleton instances
   static GlobalNavigator _instance;
 
-  factory GlobalNavigator(GlobalKey<NavigatorState> navKey) {
+  factory GlobalNavigator({GlobalKey<NavigatorState> navKey}) {
     if (_instance != null) {
       return _instance;
     }

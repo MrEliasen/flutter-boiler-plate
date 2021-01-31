@@ -26,7 +26,7 @@ Future<void> main() async {
   // setup Sentry.io and local error handler
   ErrorHandler();
   // Load the global navigator
-  GlobalNavigator(navKey);
+  GlobalNavigator(navKey: navKey);
   // Load the Device
   Device();
   // Load Hive
