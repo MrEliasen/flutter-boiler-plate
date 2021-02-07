@@ -10,7 +10,10 @@ abstract class SplashScreenState extends Equatable {
   List<Object> get props => [];
 }
 
-/// INITIAL/PROGRESS
+/// INITIAL
+class SplashScreenInitialState extends SplashScreenState {}
+
+/// LOAD
 class SessionLoadInProgressState extends SplashScreenState {}
 
 /// SUCCESS

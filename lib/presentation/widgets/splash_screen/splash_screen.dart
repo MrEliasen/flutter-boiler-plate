@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen.dart';
-import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_bloc.dart';
-import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_states.dart';
 import 'package:flutter_app_boilerplate/presentation/routes/route_transitions.dart';
 import 'package:flutter_app_boilerplate/presentation/routes/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

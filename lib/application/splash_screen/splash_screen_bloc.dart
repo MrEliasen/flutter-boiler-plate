@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_events.dart';
-import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen_states.dart';
+import 'package:flutter_app_boilerplate/application/splash_screen/splash_screen.dart';
+import 'package:flutter_app_boilerplate/infrastructure/core/error_handler.dart';
 import 'package:flutter_app_boilerplate/infrastructure/sources/local/db/hive/hive_db.dart';
 import 'package:flutter_app_boilerplate/models/auth/user.dart';
 
 class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
-  SplashScreenBloc() : super(SessionLoadInProgressState());
+  SplashScreenBloc() : super(SplashScreenInitialState());
 
   @override
   Stream<SplashScreenState> mapEventToState(SplashScreenEvent event) async* {
@@ -33,5 +33,11 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
     } catch (error, stackTrace) {
       yield SessionLoadFailureState(error, stackTrace);
     }
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    ErrorHandler().logException(error, stackTrace);
+    super.onError(error, stackTrace);
   }
 }
